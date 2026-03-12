@@ -1,7 +1,10 @@
+import 'package:e301_login/router/router.dart';
+import 'package:e301_login/ui/layouts/auth/auth_layout.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  Flurorouter.configRoutes();
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -9,12 +12,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Admin Dashboard',
+      initialRoute: '/',
+      onGenerateRoute: Flurorouter.router.generator,
+      builder: (_, child) {
+        return AuthLayout();
+      },
     );
   }
 }
