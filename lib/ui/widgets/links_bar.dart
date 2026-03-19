@@ -6,15 +6,18 @@ class LinksBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Container(
       color: Colors.black,
+      height: (size.width>1000)?size.height*0.1:null,
       child: Container(
         width: double.infinity,
         height: 70,
         child: Wrap(
           alignment: WrapAlignment.center,
           children: [
-            LinkText(texto: 'About',onPressed: ()=>print('Click on About')),
+            LinkText(texto: 'About', onPressed: () => print('Click on About')),
             LinkText(texto: 'Help Center'),
             LinkText(texto: 'Terms of Service'),
             LinkText(texto: 'Privacy Policy'),
