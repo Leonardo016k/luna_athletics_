@@ -4,8 +4,8 @@ import 'package:e301_login/ui/buttons/link_text.dart';
 import 'package:e301_login/ui/inputs/custom_inputs.dart';
 import 'package:flutter/material.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,15 @@ class LoginView extends StatelessWidget {
           child: Form(
             child: Column(
               children: [
+                TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: CustomInputs.loginInputDecoration(
+                    hint: 'Ingrese su nombre',
+                    label: 'Nombre',
+                    icon: Icons.supervised_user_circle_outlined,
+                  ),
+                ),
+                SizedBox(height: 20),
                 TextFormField(
                   style: TextStyle(color: Colors.white),
                   decoration: CustomInputs.loginInputDecoration(
@@ -40,14 +49,14 @@ class LoginView extends StatelessWidget {
                 SizedBox(height: 20),
                 CustomOutlinedButton(
                   onPressed: () {},
-                  text: 'Ingresar',
+                  text: 'Crear Cuenta',
                   isFilled: true,
                 ),
                 SizedBox(height: 20),
                 LinkText(
-                  texto: 'Nueva Cuenta',
+                  texto: 'Ir al login',
                   onPressed: () {
-                    Navigator.pushNamed(context, Flurorouter.registerRoute);
+                    Navigator.pushNamed(context, Flurorouter.loginRoute);
                   },
                 ),
               ],
@@ -57,5 +66,4 @@ class LoginView extends StatelessWidget {
       ),
     );
   }
-
 }
