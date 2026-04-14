@@ -1,3 +1,4 @@
+import 'package:e301_login/providers/auth_provider.dart';
 import 'package:e301_login/providers/login_form_provider.dart';
 import 'package:e301_login/router/router.dart';
 import 'package:e301_login/ui/buttons/custom_outlined_button.dart';
@@ -12,6 +13,8 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return ChangeNotifierProvider(
       create: (context) => LoginFormProvider(),
       child: Builder(
@@ -70,7 +73,12 @@ class LoginView extends StatelessWidget {
                       SizedBox(height: 20),
                       CustomOutlinedButton(
                         onPressed: () {
-                          loginFormProvider.validateForm();
+                          final isValid = loginFormProvider.validateForm();
+                          if (isValid)
+                            authProvider.login(
+                              loginFormProvider.email,
+                              loginFormProvider.password,
+                            );
                         },
                         text: 'Ingresar',
                         isFilled: true,

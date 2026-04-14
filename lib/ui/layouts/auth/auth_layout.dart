@@ -68,28 +68,30 @@ class _DesktopBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Container(
-      width: size.width,
-      height: size.height * 0.9,
-      color: Colors.amber,
-      child: Row(
-        children: [
-          //Imagen
-          BackgroundImage(),
-          //View
-          Container(
-            color: Colors.black,
-            width: 500,
-            height: double.infinity,
-            child: Column(
-              children: [
-                CustomTitle(),
-                SizedBox(height: 20),
-                Expanded(child: child),
-              ],
+    return Expanded(
+      child: Container(
+        width: size.width,
+        height: size.height * 0.9,
+        color: Colors.amber,
+        child: Row(
+          children: [
+            //Imagen
+            Expanded(child: BackgroundImage()),
+            //View
+            Container(
+              color: Colors.black,
+              width: 500,
+              height: double.infinity,
+              child: Column(
+                children: [
+                  CustomTitle(),
+                  SizedBox(height: 20),
+                  Expanded(child: child),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
