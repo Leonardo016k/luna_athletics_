@@ -1,4 +1,5 @@
 import 'package:e301_login/router/admin_handlers.dart';
+import 'package:e301_login/router/dashboard_handlers.dart';
 import 'package:e301_login/router/no_page_found_handlers.dart';
 import 'package:fluro/fluro.dart';
 
@@ -28,6 +29,11 @@ class Flurorouter {
     router.define(
       registerRoute,
       handler: AdminHandlers.register,
+      transitionType: TransitionType.none  
+    );
+    router.define(
+      dashboardRoute,
+      handler: DashboardHandlers.dashboard,
       transitionType: TransitionType.none  
     );
 
