@@ -20,8 +20,9 @@ class AuthProvider extends ChangeNotifier {
     LocalStorage.prefs.setString('token', this._token!);
 
     //TODO: navegar al dashboard
-
+    authStatus = AuthStatus.authenticated;
     notifyListeners();
+    NavigationService.replaceTo(Flurorouter.dashboardRoute);
   }
 
   Future<bool> isAuthenticated() async {
@@ -38,8 +39,6 @@ class AuthProvider extends ChangeNotifier {
     await Future.delayed(Duration(milliseconds: 1000));
     authStatus = AuthStatus.authenticated;
     notifyListeners();
-    NavigationService.replaceTo(Flurorouter.dashboardRoute);
-
     return true;
   }
 }
