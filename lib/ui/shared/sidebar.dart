@@ -18,15 +18,22 @@ class Sidebar extends StatelessWidget {
           //Logo
           Logo(),
           SizedBox(height: 50),
-          TextSeparator(text: 'principal'),
+          TextSeparator(text: 'main'),
 
           //Opciones
-          MenuItem(
-            text: 'Dashboard', 
-            icon: Icons.compass_calibration_outlined,
-            isActive: true, 
-            onPressed: ()=>print('Click on Dashboard'),
-          ),
+          MenuItem(text: 'Dashboard', icon: Icons.compass_calibration_outlined, onPressed: (){}),
+          MenuItem(text: 'Analytic', icon: Icons.show_chart_outlined, onPressed: (){}),
+          MenuItem(text: 'Categories', icon: Icons.layers_clear_outlined, onPressed: (){}),
+          MenuItem(text: 'Products', icon: Icons.dashboard_outlined, onPressed: (){}),
+          MenuItem(text: 'Discounts', icon: Icons.attach_money_outlined, onPressed: (){}),
+          MenuItem(text: 'Customers', icon: Icons.people_alt_outlined, onPressed: (){}),
+          SizedBox(height: 30),
+          TextSeparator(text: 'UI Elements'),
+          MenuItem(text: 'Icons', icon: Icons.list_alt_outlined, onPressed: (){}),
+          MenuItem(text: 'Marketing', icon: Icons.mark_email_read_outlined, onPressed: (){}),
+          MenuItem(text: 'Campeign', icon: Icons.note_add_outlined, onPressed: (){}),
+          MenuItem(text: 'Black', icon: Icons.post_add_outlined, onPressed: (){}),
+          MenuItem(text: 'Exit', icon: Icons.exit_to_app_outlined, onPressed: (){}),
         ],
       ),
     );

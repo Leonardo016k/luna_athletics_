@@ -1,3 +1,4 @@
+import 'package:e301_login/ui/shared/navbar.dart';
 import 'package:e301_login/ui/shared/sidebar.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,16 @@ class DashboardLayout extends StatelessWidget {
         children: [
           //TODO: Si es mas de 700px
           Sidebar(),
-          Expanded(child: child)
+          Expanded(
+            child: Column(
+              children: [
+                //NavBar
+                Navbar(),
+
+                Expanded(child: child),
+              ],
+            )
+          )
         ],
       ),
     );
