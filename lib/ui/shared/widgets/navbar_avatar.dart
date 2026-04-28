@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+
+class NavbarAvatar extends StatelessWidget {
+  const NavbarAvatar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipOval(
+      child: Container(
+        child: Image.network('https://media.istockphoto.com/id/1332100919/vector/man-icon-black-icon-person-symbol.jpg?s=612x612&w=0&k=20&c=AVVJkvxQQCuBhawHrUhDRTCeNQ3Jgt0K1tXjJsFy1eg='),
+        width: 30,
+        height: 30,
+      ),
+    );
+  }
+}
