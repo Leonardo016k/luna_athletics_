@@ -14,27 +14,33 @@ class Flurorouter {
 
   //dashboard route
   static String dashboardRoute = '/dashboard';
+  static String iconsRoute = '/dashboard/icons';
 
   static void configRoutes() {
     router.define(
-      rootRoute, 
+      rootRoute,
       handler: AdminHandlers.login,
-      transitionType: TransitionType.none
+      transitionType: TransitionType.none,
     );
     router.define(
-      loginRoute, 
+      loginRoute,
       handler: AdminHandlers.login,
-      transitionType: TransitionType.none
+      transitionType: TransitionType.none,
     );
     router.define(
       registerRoute,
       handler: AdminHandlers.register,
-      transitionType: TransitionType.none  
+      transitionType: TransitionType.none,
     );
     router.define(
       dashboardRoute,
       handler: DashboardHandlers.dashboard,
-      transitionType: TransitionType.none  
+      transitionType: TransitionType.none,
+    );
+    router.define(
+      iconsRoute,
+      handler: DashboardHandlers.icons,
+      transitionType: TransitionType.none,
     );
 
     //404
