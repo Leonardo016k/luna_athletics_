@@ -1,3 +1,4 @@
+import 'package:e301_login/providers/auth_provider.dart';
 import 'package:e301_login/providers/sidemenu_provider.dart';
 import 'package:e301_login/router/router.dart';
 import 'package:e301_login/services/navigation_service.dart';
@@ -5,6 +6,7 @@ import 'package:e301_login/ui/shared/widgets/logo.dart';
 import 'package:e301_login/ui/shared/widgets/menu_item.dart';
 import 'package:e301_login/ui/shared/widgets/text_separator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key});
@@ -30,34 +32,34 @@ class Sidebar extends StatelessWidget {
 
           //Opciones
           MenuItem(
-            text: 'Dashboard',
+            text: 'inicio',
             icon: Icons.compass_calibration_outlined,
-            onPressed: () => navigateTo(Flurorouter.dashboardRoute),
+            onPressed: () => navigateTo(Flurorouter.inicioRoute),
           ),
           MenuItem(
-            text: 'Analytic',
+            text: 'Nosotros',
             icon: Icons.show_chart_outlined,
-            onPressed: () {},
+            onPressed: () => navigateTo(Flurorouter.nosotrosRoute),
           ),
           MenuItem(
-            text: 'Categories',
+            text: 'Perfil',
             icon: Icons.layers_clear_outlined,
-            onPressed: () {},
+            onPressed: () => navigateTo(Flurorouter.perfilRoute),
           ),
           MenuItem(
-            text: 'Products',
+            text: 'Productos',
             icon: Icons.dashboard_outlined,
-            onPressed: () {},
+            onPressed: () => navigateTo(Flurorouter.productosRoute),
           ),
           MenuItem(
-            text: 'Discounts',
+            text: 'Carrito',
             icon: Icons.attach_money_outlined,
-            onPressed: () {},
+            onPressed: () => navigateTo(Flurorouter.carritoRoute),
           ),
           MenuItem(
-            text: 'Customers',
+            text: 'pedidos',
             icon: Icons.people_alt_outlined,
-            onPressed: () {},
+            onPressed: () => navigateTo(Flurorouter.pedidosRoute),
           ),
           SizedBox(height: 30),
           TextSeparator(text: 'UI Elements'),
@@ -67,24 +69,26 @@ class Sidebar extends StatelessWidget {
             onPressed: () => navigateTo(Flurorouter.iconsRoute),
           ),
           MenuItem(
-            text: 'Marketing',
+            text: 'faq',
             icon: Icons.mark_email_read_outlined,
-            onPressed: () {},
+            onPressed: () => navigateTo(Flurorouter.faqRoute),
           ),
           MenuItem(
-            text: 'Campeign',
+            text: 'contacto',
             icon: Icons.note_add_outlined,
-            onPressed: () {},
+            onPressed: () => navigateTo(Flurorouter.contactoRoute),
           ),
-          MenuItem(
-            text: 'Black',
-            icon: Icons.post_add_outlined,
-            onPressed: () {},
-          ),
+
           MenuItem(
             text: 'Exit',
             icon: Icons.exit_to_app_outlined,
-            onPressed: () {},
+            onPressed: () {
+              // 1. Llamas al método logout de tu AuthProvider
+              Provider.of<AuthProvider>(context, listen: false).logout();
+
+              // 2. Opcionalmente usas tu NavigationService para forzar el redireccionamiento
+              // NavigationService.replaceTo('/auth/login');
+            },
           ),
         ],
       ),

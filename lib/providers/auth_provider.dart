@@ -22,7 +22,7 @@ class AuthProvider extends ChangeNotifier {
     //TODO: navegar al dashboard
     authStatus = AuthStatus.authenticated;
     notifyListeners();
-    NavigationService.replaceTo(Flurorouter.dashboardRoute);
+    NavigationService.replaceTo(Flurorouter.inicioRoute);
   }
 
   Future<bool> isAuthenticated() async {
@@ -40,5 +40,19 @@ class AuthProvider extends ChangeNotifier {
     authStatus = AuthStatus.authenticated;
     notifyListeners();
     return true;
+  }
+
+  void logout() {
+    // 1. Eliminar el token del almacenamiento local
+    LocalStorage.prefs.remove('token');
+
+    // 2. Cambiar el estado a no autenticado
+    authStatus = AuthStatus.notAuthenticated;
+
+    // 3. Notificar a los widgets para que reaccionen al cambio
+    notifyListeners();
+
+    // 4. Redirigir a la ruta de login definida en tu Flurorouter
+    NavigationService.replaceTo(Flurorouter.loginRoute);
   }
 }

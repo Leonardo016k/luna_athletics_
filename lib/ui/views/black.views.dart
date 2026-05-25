@@ -1,15 +1,13 @@
 import 'package:e301_login/ui/labels/custom_labels.dart';
 import 'package:flutter/material.dart';
 
-class DashboardView extends StatelessWidget {
-  const DashboardView({super.key});
+class BlackViews extends StatelessWidget {
+  const BlackViews({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text('Dashboard View',style: CustomLabels.h1,),
-      ),
+      child: Center(child: Text('Black view', style: CustomLabels.h1)),
     );
   }
 }

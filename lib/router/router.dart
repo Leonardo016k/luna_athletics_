@@ -13,8 +13,16 @@ class Flurorouter {
   static String registerRoute = 'auth/register';
 
   //dashboard route
-  static String dashboardRoute = '/dashboard';
+  static String inicioRoute = '/dashboard';
   static String iconsRoute = '/dashboard/icons';
+  static String nosotrosRoute = '/dashboard/nosotros';
+  static String perfilRoute = '/dashboard/perfil';
+  static String productosRoute = '/dashboard/productos';
+  static String carritoRoute = '/dashboard/carrito';
+  static String pedidoRoute = '/dashboard/pedido';
+  static String faqRoute = '/dashboard/faq';
+  static String contactoRoute = '/dashboard/contacto';
+  static String pedidosRoute = '/dashboard/pedidos';
 
   static void configRoutes() {
     router.define(
@@ -33,13 +41,48 @@ class Flurorouter {
       transitionType: TransitionType.none,
     );
     router.define(
-      dashboardRoute,
-      handler: DashboardHandlers.dashboard,
+      inicioRoute,
+      handler: DashboardHandlers.inicio,
       transitionType: TransitionType.none,
     );
     router.define(
       iconsRoute,
       handler: DashboardHandlers.icons,
+      transitionType: TransitionType.none,
+    );
+    router.define(
+      nosotrosRoute,
+      handler: DashboardHandlers.nosotros,
+      transitionType: TransitionType.none,
+    );
+    router.define(
+      perfilRoute,
+      handler: DashboardHandlers.perfil,
+      transitionType: TransitionType.none,
+    );
+    router.define(
+      productosRoute,
+      handler: DashboardHandlers.products,
+      transitionType: TransitionType.none,
+    );
+    router.define(
+      carritoRoute,
+      handler: DashboardHandlers.carrito,
+      transitionType: TransitionType.none,
+    );
+    router.define(
+      pedidosRoute,
+      handler: DashboardHandlers.pedidos,
+      transitionType: TransitionType.none,
+    );
+    router.define(
+      faqRoute,
+      handler: DashboardHandlers.faq,
+      transitionType: TransitionType.none,
+    );
+    router.define(
+      contactoRoute,
+      handler: DashboardHandlers.contacto,
       transitionType: TransitionType.none,
     );
 

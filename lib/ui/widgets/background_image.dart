@@ -12,10 +12,7 @@ class BackgroundImage extends StatelessWidget {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Image(
-              image: AssetImage('twitter-white-logo.png'),
-              width: 400,
-            ),
+            child: Image(image: AssetImage('logoluna.png'), width: 400),
           ),
         ),
       ),
@@ -25,8 +22,8 @@ class BackgroundImage extends StatelessWidget {
   BoxDecoration buildBoxDecoration() {
     return BoxDecoration(
       image: DecorationImage(
-        image: AssetImage('twitter-bg.png'),
-        fit: BoxFit.cover
+        image: AssetImage('lunalift2.jpg'),
+        fit: BoxFit.cover,
       ),
     );
   }
