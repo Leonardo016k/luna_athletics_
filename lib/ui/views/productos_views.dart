@@ -5,7 +5,6 @@ class ProductosView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Lista simulada con los datos de tu catálogo
     final List<Map<String, dynamic>> productos = [
       {
         'nombre': 'PLAYERA MANGA CORTA NEGRA DISEÑO LUNALIFT',
@@ -15,109 +14,129 @@ class ProductosView extends StatelessWidget {
       {
         'nombre': 'PLAYERA MANGA CORTA GRIS DISEÑO GTR',
         'precio': 550.00,
-        'imagen': 'assets/playera_gtr.jpg',
+        'imagen': 'assets/gtr.jpg',
       },
       {
         'nombre': 'PLAYERA MANGA CORTA GRIS DISEÑO ZEUS',
         'precio': 450.00,
-        'imagen': 'assets/playera_zeus.jpg',
+        'imagen': 'assets/zeus.png',
+      },
+      {
+        'nombre': 'TANK TOP "OVERSIZE"',
+        'precio': 380.00,
+        'imagen': 'assets/lunalift1.jpg',
+      },
+      {
+        'nombre': 'JOGGERS "ARTIC FLOW"',
+        'precio': 700.00,
+        'imagen': 'assets/pants.jpg',
+      },
+      {
+        'nombre': 'SHORTS "URBAN SHAOS"',
+        'precio': 250.00,
+        'imagen': 'assets/shorts.png',
       },
     ];
 
     return Scaffold(
-      backgroundColor: const Color(
-        0xFF071A35,
-      ), // Fondo oscuro base del proyecto
+      backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // ==========================================
-            // ENCABEZADO (Títulos)
-            // ==========================================
-            const Text(
-              'CATÁLOGO',
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 3,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'EQUIPAMIENTO DE ELITE',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 32),
-
-            // ==========================================
-            // BARRA DE BÚSQUEDA
-            // ==========================================
-            Container(
-              width: 800, // Limita el ancho máximo en pantallas web
-              child: TextField(
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: 'Buscar prenda (Ej: Hoodie, Shorts...)',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  filled: true,
-                  fillColor: Colors.black12,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 18,
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'CATÁLOGO',
+                  style: TextStyle(
+                    color: Colors.redAccent.shade700,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 4,
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                      width: 0.5,
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'EQUIPAMIENTO DE ELITE',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 36,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                Container(
+                  width: 600,
+                  child: TextField(
+                    style: const TextStyle(color: Colors.white, fontSize: 15),
+                    cursorColor: Colors.redAccent,
+                    decoration: InputDecoration(
+                      hintText: 'Buscar prenda (Ej: Hoodie, Shorts...)',
+                      hintStyle: const TextStyle(
+                        color: Colors.white38,
+                        fontSize: 14,
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.search_sharp,
+                        color: Colors.white54,
+                        size: 20,
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xFF111113),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 18,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                        borderSide: BorderSide(
+                          color: Colors.white.withOpacity(0.05),
+                          width: 1,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                        borderSide: BorderSide(
+                          color: Colors.redAccent.shade700,
+                          width: 1,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 48),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: productos.length,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 320,
+                    mainAxisSpacing: 32,
+                    crossAxisSpacing: 24,
+                    mainAxisExtent: 460,
+                  ),
+                  itemBuilder: (context, index) {
+                    final prod = productos[index];
+                    return TarjetaProducto(
+                      nombre: prod['nombre'],
+                      precio: prod['precio'],
+                      imagen: prod['imagen'],
+                    );
+                  },
+                ),
+              ],
             ),
-            const SizedBox(height: 48),
-
-            // ==========================================
-            // REJILLA DE PRODUCTOS (GridView)
-            // ==========================================
-            GridView.builder(
-              shrinkWrap: true,
-              physics:
-                  const NeverScrollableScrollPhysics(), // El scroll lo maneja el SingleChildScrollView externo
-              itemCount: productos.length,
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 350, // Ancho máximo de cada tarjeta
-                mainAxisSpacing: 24, // Espacio vertical entre tarjetas
-                crossAxisSpacing: 24, // Espacio horizontal entre tarjetas
-                mainAxisExtent:
-                    460, // Altura fija optimizada para incluir el botón
-              ),
-              itemBuilder: (context, index) {
-                final prod = productos[index];
-                return TarjetaProducto(
-                  nombre: prod['nombre'],
-                  precio: prod['precio'],
-                  imagen: prod['imagen'],
-                );
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-// ==========================================
-// COMPONENTE: TARJETA DE PRODUCTO
-// ==========================================
 class TarjetaProducto extends StatelessWidget {
   final String nombre;
   final double precio;
@@ -134,78 +153,88 @@ class TarjetaProducto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF0C1F3D), // Color oscuro de la tarjeta
-        borderRadius: BorderRadius.circular(16),
+        color: const Color(0xFF111113),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.white.withOpacity(0.05), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // 1. Contenedor de la Imagen
           Expanded(
-            flex: 5, // Proporción asignada a la foto
+            flex: 5,
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(16),
+                top: Radius.circular(8),
               ),
               child: Container(
-                color: Colors.white,
+                color: const Color(0xFF161619),
                 child: Image.asset(
                   imagen,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
-                      const Icon(Icons.image, size: 50, color: Colors.grey),
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.fitness_center_sharp,
+                    size: 48,
+                    color: Colors.white24,
+                  ),
                 ),
               ),
             ),
           ),
-
-          // 2. Información del Producto e Interacción
           Expanded(
-            flex:
-                4, // Proporción asignada al bloque inferior (Texto, Precio, Botón)
+            flex: 4,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Título del artículo
                   Text(
-                    nombre,
-                    textAlign: TextAlign.center,
+                    nombre.toUpperCase(),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 13,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0.5,
+                      height: 1.3,
                     ),
                   ),
-
-                  // Precio formalizado
                   Text(
                     '\$${precio.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+                    style: TextStyle(
+                      color: Colors.redAccent.shade100,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
-                  // 3. Botón para enviar a la sección del Carrito
+                  const SizedBox(height: 4),
                   SizedBox(
-                    width: double
-                        .infinity, // Forzar expansión horizontal completa dentro del padding
+                    width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        // TODO: Implementar el manejador de estado global para persistir la selección al carrito
                         print('Producto enviado al flujo del carrito: $nombre');
                       },
-                      icon: const Icon(Icons.add_shopping_cart, size: 18),
-                      label: const Text('Agregar'),
+                      icon: const Icon(
+                        Icons.add_shopping_cart_sharp,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                      label: const Text(
+                        'AGREGAR',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1,
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        backgroundColor: Colors.redAccent.shade700,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(4),
                         ),
                       ),
                     ),

@@ -18,9 +18,9 @@ class _DashboardLayoutState extends State<DashboardLayout>
   void initState() {
     super.initState();
 
-    SidemenuProvider.menuController = new AnimationController(
+    SidemenuProvider.menuController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
     );
   }
 
@@ -29,43 +29,45 @@ class _DashboardLayoutState extends State<DashboardLayout>
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: const Color(0xFF0F0F11),
       body: Stack(
         children: [
           Row(
             children: [
-              //TODO: Si es mas de 700px
-              if (size.width >= 700) Sidebar(),
+              if (size.width >= 700) const Sidebar(),
 
               Expanded(
                 child: Column(
                   children: [
-                    //NavBar
-                    Navbar(),
+                    const Navbar(),
 
                     Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Container(
+                        color: const Color(0xFF0F0F11),
+                        width: double.infinity,
+                        height: double.infinity,
                         child: widget.child,
-                      )
+                      ),
                     ),
                   ],
                 ),
               ),
             ],
           ),
+
+          // Menú lateral para pantallas móviles
           if (size.width < 700)
-           AnimatedBuilder(
-            animation: SidemenuProvider.menuController, 
-            builder: (context, _) => Stack(
-              children: [
-                Transform.translate(
-                  offset: Offset(SidemenuProvider.movement.value, 0),
-                  child: Sidebar(),
-                )
-              ],
-            )
-          ),
+            AnimatedBuilder(
+              animation: SidemenuProvider.menuController,
+              builder: (context, _) => Stack(
+                children: [
+                  Transform.translate(
+                    offset: Offset(SidemenuProvider.movement.value, 0),
+                    child: const Sidebar(),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

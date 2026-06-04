@@ -4,7 +4,6 @@ import 'package:e301_login/router/router.dart';
 import 'package:e301_login/services/navigation_service.dart';
 import 'package:e301_login/ui/shared/widgets/logo.dart';
 import 'package:e301_login/ui/shared/widgets/menu_item.dart';
-import 'package:e301_login/ui/shared/widgets/text_separator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,75 +18,69 @@ class Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
+      width: 242,
       height: double.infinity,
       decoration: buildBoxDecoration(),
       child: ListView(
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
-          //Logo
-          Logo(),
-          SizedBox(height: 50),
-          TextSeparator(text: 'main'),
+          // Logo
+          const Logo(),
+          const SizedBox(height: 30),
 
-          //Opciones
           MenuItem(
-            text: 'inicio',
-            icon: Icons.compass_calibration_outlined,
+            text: 'Inicio',
+            icon: Icons.home_max_outlined,
             onPressed: () => navigateTo(Flurorouter.inicioRoute),
           ),
           MenuItem(
             text: 'Nosotros',
-            icon: Icons.show_chart_outlined,
+            icon: Icons.fitness_center_outlined,
             onPressed: () => navigateTo(Flurorouter.nosotrosRoute),
           ),
           MenuItem(
             text: 'Perfil',
-            icon: Icons.layers_clear_outlined,
+            icon: Icons.person_outline_sharp,
             onPressed: () => navigateTo(Flurorouter.perfilRoute),
           ),
           MenuItem(
             text: 'Productos',
-            icon: Icons.dashboard_outlined,
+            icon: Icons.checkroom_outlined,
             onPressed: () => navigateTo(Flurorouter.productosRoute),
           ),
           MenuItem(
             text: 'Carrito',
-            icon: Icons.attach_money_outlined,
+            icon: Icons.local_mall_outlined,
             onPressed: () => navigateTo(Flurorouter.carritoRoute),
           ),
           MenuItem(
-            text: 'pedidos',
-            icon: Icons.people_alt_outlined,
+            text: 'Pedidos',
+            icon: Icons.local_shipping_outlined,
             onPressed: () => navigateTo(Flurorouter.pedidosRoute),
           ),
-          SizedBox(height: 30),
-          TextSeparator(text: 'UI Elements'),
           MenuItem(
-            text: 'Icons',
-            icon: Icons.list_alt_outlined,
-            onPressed: () => navigateTo(Flurorouter.iconsRoute),
-          ),
-          MenuItem(
-            text: 'faq',
-            icon: Icons.mark_email_read_outlined,
+            text: 'Preguntas frecuentes',
+            icon: Icons.help_outline_sharp,
             onPressed: () => navigateTo(Flurorouter.faqRoute),
           ),
           MenuItem(
-            text: 'contacto',
-            icon: Icons.note_add_outlined,
+            text: 'Contacto',
+            icon: Icons.support_agent_outlined,
             onPressed: () => navigateTo(Flurorouter.contactoRoute),
           ),
 
-          MenuItem(
-            text: 'Exit',
-            icon: Icons.exit_to_app_outlined,
-            onPressed: () {
-              // 1. Llamas al método logout de tu AuthProvider
-              Provider.of<AuthProvider>(context, listen: false).logout();
+          const Divider(
+            color: Colors.white10,
+            height: 30,
+            indent: 20,
+            endIndent: 20,
+          ),
 
-              // 2. Opcionalmente usas tu NavigationService para forzar el redireccionamiento
-              // NavigationService.replaceTo('/auth/login');
+          MenuItem(
+            text: 'Cerrar Sesión',
+            icon: Icons.logout_outlined,
+            onPressed: () {
+              Provider.of<AuthProvider>(context, listen: false).logout();
             },
           ),
         ],
@@ -95,8 +88,10 @@ class Sidebar extends StatelessWidget {
     );
   }
 
-  BoxDecoration buildBoxDecoration() => BoxDecoration(
-    gradient: LinearGradient(colors: [Color(0xff092044), Color(0xff092042)]),
-    boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 10)],
+  BoxDecoration buildBoxDecoration() => const BoxDecoration(
+    color: Color(0xFF0F0F11), // Negro mate premium
+    boxShadow: [
+      BoxShadow(color: Colors.black45, blurRadius: 15, offset: Offset(2, 0)),
+    ],
   );
 }

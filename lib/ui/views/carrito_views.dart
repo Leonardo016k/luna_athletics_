@@ -5,23 +5,21 @@ class CarritoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Lista de productos que simulamos que el usuario ya agregó al carrito
     final List<Map<String, dynamic>> itemsCarrito = [
       {
         'nombre': 'PLAYERA MANGA CORTA GRIS DISEÑO GTR',
         'precio': 550.00,
         'cantidad': 1,
-        'imagen': 'assets/playera_gtr.jpg',
+        'imagen': 'assets/gtr.jpg',
       },
       {
         'nombre': 'PLAYERA MANGA CORTA GRIS DISEÑO ZEUS',
         'precio': 450.00,
         'cantidad': 2,
-        'imagen': 'assets/playera_zeus.jpg',
+        'imagen': 'assets/zeus.png',
       },
     ];
 
-    // Cálculos rápidos para el resumen
     double subtotal = 0;
     for (var item in itemsCarrito) {
       subtotal += (item['precio'] * item['cantidad']);
@@ -30,75 +28,71 @@ class CarritoView extends StatelessWidget {
     double total = subtotal + envio;
 
     return Scaffold(
-      backgroundColor: const Color(
-        0xFF071A35,
-      ), // El fondo azul oscuro de la app
+      backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Título de la sección
-            const Text(
-              'TU CARRITO',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'TU CARRITO',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    if (constraints.maxWidth > 900) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: _ListaProductosCarrito(items: itemsCarrito),
+                          ),
+                          const SizedBox(width: 32),
+                          Expanded(
+                            flex: 1,
+                            child: _ResumenCompra(
+                              subtotal: subtotal,
+                              envio: envio,
+                              total: total,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          _ListaProductosCarrito(items: itemsCarrito),
+                          const SizedBox(height: 32),
+                          _ResumenCompra(
+                            subtotal: subtotal,
+                            envio: envio,
+                            total: total,
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
-            const SizedBox(height: 24),
-
-            // Diseño adaptable: Si la pantalla es ancha (Web/PC), usa dos columnas.
-            // Si es chica, las encadena hacia abajo.
-            LayoutBuilder(
-              builder: (context, constraints) {
-                if (constraints.maxWidth > 900) {
-                  // Vista Web / Desktop (Dos columnas)
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: _ListaProductosCarrito(items: itemsCarrito),
-                      ),
-                      const SizedBox(width: 32),
-                      Expanded(
-                        flex: 1,
-                        child: _ResumenCompra(
-                          subtotal: subtotal,
-                          envio: envio,
-                          total: total,
-                        ),
-                      ),
-                    ],
-                  );
-                } else {
-                  // Vista Móvil o pantalla muy estrecha (Una columna sobre otra)
-                  return Column(
-                    children: [
-                      _ListaProductosCarrito(items: itemsCarrito),
-                      const SizedBox(height: 24),
-                      _ResumenCompra(
-                        subtotal: subtotal,
-                        envio: envio,
-                        total: total,
-                      ),
-                    ],
-                  );
-                }
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-// =========================================================================
-// COMPONENTE 1: LISTA DE PRODUCTOS AGREGADOS
-// =========================================================================
 class _ListaProductosCarrito extends StatelessWidget {
   final List<Map<String, dynamic>> items;
   const _ListaProductosCarrito({required this.items});
@@ -115,86 +109,87 @@ class _ListaProductosCarrito extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 16),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: const Color(0xFF0C1F3D), // Fondo de la tarjeta del item
-            borderRadius: BorderRadius.circular(12),
+            color: const Color(0xFF111113),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.white.withOpacity(0.05), width: 1),
           ),
           child: Row(
             children: [
-              // Foto del producto
               ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(4),
                 child: Container(
                   width: 80,
                   height: 80,
-                  color: Colors.white,
+                  color: const Color(0xFF161619),
                   child: Image.asset(
                     item['imagen'],
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.image, color: Colors.grey),
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.fitness_center_sharp,
+                      color: Colors.white24,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
-
-              // Detalles (Nombre y Precio Unitario)
+              const SizedBox(width: 20),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item['nombre'],
+                      item['nombre'].toString().toUpperCase(),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         fontSize: 14,
+                        letterSpacing: 0.5,
+                        height: 1.3,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       '\$${item['precio'].toStringAsFixed(2)} c/u',
-                      style: const TextStyle(color: Colors.grey, fontSize: 13),
+                      style: const TextStyle(
+                        color: Colors.white38,
+                        fontSize: 13,
+                      ),
                     ),
                   ],
                 ),
               ),
-
-              // Controles de Cantidad (Estructura de botones - / +)
               Row(
                 children: [
                   IconButton(
                     icon: const Icon(
-                      Icons.remove_circle_outline,
-                      color: Colors.white70,
+                      Icons.remove_circle_outline_sharp,
+                      color: Colors.white54,
+                      size: 22,
                     ),
-                    onPressed: () {
-                      // TODO: Lógica para restar cantidad
-                    },
+                    onPressed: () {},
                   ),
+                  const SizedBox(width: 4),
                   Text(
                     '${item['cantidad']}',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w900,
                     ),
                   ),
+                  const SizedBox(width: 4),
                   IconButton(
                     icon: const Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.white70,
+                      Icons.add_circle_outline_sharp,
+                      color: Colors.white54,
+                      size: 22,
                     ),
-                    onPressed: () {
-                      // TODO: Lógica para sumar cantidad
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
-              const SizedBox(width: 16),
-
-              // Precio Total por ese producto e Icono de Eliminar
+              const SizedBox(width: 24),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -202,18 +197,20 @@ class _ListaProductosCarrito extends StatelessWidget {
                     '\$${(item['precio'] * item['cantidad']).toStringAsFixed(2)}',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
                     ),
                   ),
+                  const SizedBox(height: 4),
                   IconButton(
-                    icon: const Icon(
-                      Icons.delete_outline,
-                      color: Colors.redAccent,
+                    constraints: const BoxConstraints(),
+                    padding: EdgeInsets.zero,
+                    icon: Icon(
+                      Icons.delete_outline_sharp,
+                      color: Colors.redAccent.shade700,
+                      size: 20,
                     ),
-                    onPressed: () {
-                      // TODO: Lógica para remover por completo del carrito
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -225,9 +222,6 @@ class _ListaProductosCarrito extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// COMPONENTE 2: TARJETA LATERAL DE RESUMEN Y PAGO
-// =========================================================================
 class _ResumenCompra extends StatelessWidget {
   final double subtotal;
   final double envio;
@@ -244,12 +238,9 @@ class _ResumenCompra extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF0C1F3D),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.blue.withOpacity(0.3),
-          width: 1,
-        ), // Detalle sutil de borde
+        color: const Color(0xFF111113),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.white.withOpacity(0.05), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,46 +249,50 @@ class _ResumenCompra extends StatelessWidget {
             'RESUMEN DE COMPRA',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1,
+              fontSize: 14,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 2,
             ),
           ),
-          const Divider(height: 32, color: Colors.white24),
-
-          // Fila Subtotal
+          const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
                 'Subtotal',
-                style: TextStyle(color: Colors.grey, fontSize: 15),
+                style: TextStyle(color: Colors.white54, fontSize: 14),
               ),
               Text(
                 '\$${subtotal.toStringAsFixed(2)}',
-                style: const TextStyle(color: Colors.white, fontSize: 15),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
           const SizedBox(height: 16),
-
-          // Fila Envío
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
                 'Envío',
-                style: TextStyle(color: Colors.grey, fontSize: 15),
+                style: TextStyle(color: Colors.white54, fontSize: 14),
               ),
               Text(
                 '\$${envio.toStringAsFixed(2)}',
-                style: const TextStyle(color: Colors.white, fontSize: 15),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
-          const Divider(height: 32, color: Colors.white24),
-
-          // Fila TOTAL
+          const SizedBox(height: 24),
+          Divider(height: 1, color: Colors.white.withOpacity(0.05)),
+          const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -305,42 +300,40 @@ class _ResumenCompra extends StatelessWidget {
                 'Total',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
               Text(
                 '\$${total.toStringAsFixed(2)}',
-                style: const TextStyle(
-                  color: Colors.blue,
+                style: TextStyle(
+                  color: Colors.redAccent.shade100,
                   fontSize: 22,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 32),
-
-          // BOTÓN PRINCIPAL PARA PROCESAR EL PEDIDO
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {
-                // TODO: Conectar a pasarela de pago o confirmación de orden
-                print('Procesando orden de compra...');
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent.shade700,
                 padding: const EdgeInsets.symmetric(vertical: 18),
+                elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(4),
                 ),
               ),
               child: const Text(
                 'PROCEDER AL PAGO',
                 style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w900,
                   letterSpacing: 1,
+                  color: Colors.white,
                 ),
               ),
             ),

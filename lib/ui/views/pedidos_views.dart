@@ -28,38 +28,40 @@ class PedidosView extends StatelessWidget {
         'fecha': '28/04/2026',
         'total': 2150.00,
         'estado': 'Cancelado',
-        'colorEstado': Colors.redAccent,
+        'colorEstado': Colors.redAccent.shade700,
         'articulos': 4,
       },
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF071A35), // El fondo oscuro oficial
+      backgroundColor: Colors.black, // Cambiado al fondo negro oficial
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(32.0),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Título de la sección
+            // Título de la sección estilo Premium
             const Text(
               'MIS PEDIDOS',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+                fontSize: 32,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1,
               ),
             ),
             const SizedBox(height: 8),
             const Text(
               'Historial de tus compras y estado de envío.',
-              style: TextStyle(color: Colors.grey, fontSize: 14),
+              style: TextStyle(color: Colors.white38, fontSize: 14),
             ),
             const SizedBox(height: 32),
 
-            // Contenedor que limita el ancho máximo en Web para que no se estire feo
+            // Contenedor que limita el ancho máximo en Web
             Center(
-              child: Container(
-                width: 1000,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1200),
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -78,9 +80,6 @@ class PedidosView extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// COMPONENTE: TARJETA DE PEDIDO INDIVIDUAL
-// =========================================================================
 class _TarjetaPedido extends StatelessWidget {
   final Map<String, dynamic> pedido;
   const _TarjetaPedido({required this.pedido});
@@ -88,17 +87,16 @@ class _TarjetaPedido extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF0C1F3D), // Fondo oscuro de las tarjetas
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white10, width: 1),
+        color: const Color(0xFF0A0A0C), // Mismo negro mate usado en el Carrito
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.white.withOpacity(0.08), width: 1),
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          // Si la pantalla es muy pequeña, acomoda los datos en columna
-          bool esMovil = constraints.maxWidth < 600;
+          bool esMovil = constraints.maxWidth < 750;
 
           return Flex(
             direction: esMovil ? Axis.vertical : Axis.horizontal,
@@ -112,39 +110,43 @@ class _TarjetaPedido extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Pedido # ${pedido['id']}',
+                    'PEDIDO # ${pedido['id']}',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0.5,
                     ),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     'Fecha: ${pedido['fecha']}  •  ${pedido['articulos']} artículo(s)',
-                    style: const TextStyle(color: Colors.grey, fontSize: 13),
+                    style: const TextStyle(color: Colors.white38, fontSize: 13),
                   ),
                 ],
               ),
               if (esMovil) const SizedBox(height: 16),
 
-              // Bloque 2: Estado del pedido (Badge con color dinámico)
+              // Bloque 2: Estado del pedido (Badge estilizado con opacidad baja)
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 14,
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: (pedido['colorEstado'] as Color).withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(20),
+                  color: (pedido['colorEstado'] as Color).withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(
+                    4,
+                  ), // Bordes más rectos y limpios
                   border: Border.all(color: pedido['colorEstado'], width: 1),
                 ),
                 child: Text(
-                  pedido['estado'],
+                  pedido['estado'].toString().toUpperCase(),
                   style: TextStyle(
                     color: pedido['colorEstado'],
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.5,
                   ),
                 ),
               ),
@@ -158,7 +160,7 @@ class _TarjetaPedido extends StatelessWidget {
                 children: [
                   const Text(
                     'Total',
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(color: Colors.white38, fontSize: 12),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -166,36 +168,46 @@ class _TarjetaPedido extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                     ),
                   ),
                 ],
               ),
               if (esMovil) const SizedBox(height: 20),
 
-              // Bloque 4: Botón de interacción
+              // Bloque 4: Botón de interacción (Cambiado de Azul a Blanco/Gris minimalista)
               OutlinedButton.icon(
                 onPressed: () {
-                  // TODO: Lógica para abrir el detalle completo del pedido
                   print('Abriendo detalle de: ${pedido['id']}');
                 },
                 icon: const Icon(
                   Icons.receipt_long_outlined,
                   size: 18,
-                  color: Colors.blue,
+                  color: Colors.white70,
                 ),
                 label: const Text(
-                  'Detalles',
-                  style: TextStyle(color: Colors.blue),
+                  'DETALLES',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 0.5,
+                  ),
                 ),
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.blue, width: 1),
+                  side: BorderSide(
+                    color: Colors.white.withOpacity(0.15),
+                    width: 1,
+                  ),
+                  backgroundColor: const Color(
+                    0xFF141416,
+                  ), // Sutil contraste de fondo
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
-                    vertical: 14,
+                    vertical: 16,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
               ),

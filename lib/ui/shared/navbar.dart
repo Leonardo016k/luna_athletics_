@@ -17,35 +17,37 @@ class Navbar extends StatelessWidget {
       decoration: buildBoxDecoration(),
       child: Row(
         children: [
-          //Icono del menu
-          SizedBox(width: 10),
-          if(size.width<=700)
+          // Icono del menú móvil
+          const SizedBox(width: 10),
+          if (size.width <= 700)
             IconButton(
               onPressed: () => SidemenuProvider.openMenu(),
-              icon: Icon(Icons.menu_outlined)
+              icon: const Icon(
+                Icons.menu_outlined,
+                color: Colors.white,
+              ), // <--- Icono en blanco para fondo negro
             ),
-          
-          SizedBox(width: 10),
 
-          //Búsqueda
-          if(size.width>400)
+          const SizedBox(width: 10),
+
+          // Búsqueda
+          if (size.width > 400)
             ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 250),
-              child: SearchText(),
+              constraints: const BoxConstraints(maxWidth: 250),
+              child: const SearchText(),
             ),
 
-          Spacer(),
-          NotificationIndicator(),
-          SizedBox(width: 20),
-          NavbarAvatar(),
-          SizedBox(width: 20),
+          const Spacer(),
+          const NotificationIndicator(),
+          const SizedBox(width: 20),
+          const NavbarAvatar(),
+          const SizedBox(width: 20),
         ],
       ),
     );
   }
 
-  BoxDecoration buildBoxDecoration() => BoxDecoration(
-    color: Colors.white,
-    boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 5)],
+  BoxDecoration buildBoxDecoration() => const BoxDecoration(
+    color: Color(0xFF0F0F11), // Negro mate idéntico al Sidebar
   );
 }

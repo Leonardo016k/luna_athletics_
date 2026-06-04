@@ -56,23 +56,23 @@ class FaqView extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(
-        0xFF071A35,
-      ), // Fondo oscuro oficial de la app
+      backgroundColor: Colors.black, // Fondo puramente negro oficial
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(32.0),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment
+              .start, // Alineado a la izquierda como "TU CARRITO" y "MIS PEDIDOS"
           children: [
             // ==========================================
-            // ENCABEZADO (Títulos)
+            // ENCABEZADO (Títulos estilizados en blanco)
             // ==========================================
             const Text(
               'SOPORTE',
               style: TextStyle(
-                color: Colors.blue,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+                color: Colors.white38, // Gris sutil deportivo
+                fontSize: 14,
+                fontWeight: FontWeight.w900,
                 letterSpacing: 3,
               ),
             ),
@@ -82,21 +82,21 @@ class FaqView extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 32,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1,
               ),
             ),
             const SizedBox(height: 12),
             const Text(
               'Encuentra respuestas rápidas sobre envíos, tallas y nuestras políticas.',
-              style: TextStyle(color: Colors.grey, fontSize: 14),
-              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white54, fontSize: 14),
             ),
             const SizedBox(height: 48),
 
-            // Contenedor para limitar el ancho en Web y que se lea cómodo
+            // Contenedor para limitar el ancho en Web y mantener consistencia simétrica
             Center(
-              child: Container(
-                width: 850,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1200),
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -106,14 +106,22 @@ class FaqView extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Título de la Categoría (Gris con tracking)
+                        // Título de la Categoría (Estilo premium en mayúsculas firmes)
                         Padding(
                           padding: const EdgeInsets.only(
-                            left: 8.0,
+                            left: 4.0,
                             top: 24,
-                            bottom: 12,
+                            bottom: 16,
                           ),
-                          child: Text(categoria['categoria']),
+                          child: Text(
+                            categoria['categoria'].toString().toUpperCase(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 2,
+                            ),
+                          ),
                         ),
 
                         // Lista de acordeones ExpansionTile para esa categoría
@@ -125,30 +133,34 @@ class FaqView extends StatelessWidget {
                             margin: const EdgeInsets.only(bottom: 12),
                             decoration: BoxDecoration(
                               color: const Color(
-                                0xFF0C1F3D,
-                              ), // Fondo oscuro de la tarjeta
+                                0xFF0A0A0C,
+                              ), // Negro mate idéntico a los otros componentes
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: Colors.white10,
-                                width: 0.5,
+                                color: Colors.white.withOpacity(0.08),
+                                width: 1,
                               ),
                             ),
                             child: Theme(
                               // Limpia la línea divisoria interna que por defecto trae ExpansionTile
-                              data: Theme.of(
-                                context,
-                              ).copyWith(dividerColor: Colors.transparent),
+                              data: Theme.of(context).copyWith(
+                                dividerColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                              ),
                               child: ExpansionTile(
                                 iconColor: Colors
-                                    .blue, // Color de la flecha al abrirse
+                                    .white, // Flecha blanca al desplegarse
                                 collapsedIconColor: Colors
-                                    .white60, // Color de la flecha cerrada
+                                    .white38, // Flecha gris al estar cerrado
                                 title: Text(
                                   faq['pregunta'],
                                   style: const TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight
+                                        .w900, // Tipografía agresiva y marcada
                                     fontSize: 15,
+                                    letterSpacing: 0.5,
                                   ),
                                 ),
                                 children: [
@@ -162,9 +174,10 @@ class FaqView extends StatelessWidget {
                                     child: Text(
                                       faq['respuesta'],
                                       style: const TextStyle(
-                                        color: Colors.grey,
+                                        color: Colors
+                                            .white54, // Gris limpio legible para la respuesta
                                         fontSize: 14,
-                                        height: 1.4,
+                                        height: 1.5,
                                       ),
                                     ),
                                   ),
